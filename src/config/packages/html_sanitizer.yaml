@@ -1,0 +1,11 @@
+framework:
+    html_sanitizer:
+        sanitizers:
+            app.article_sanitizer:
+                allow_safe_elements: true
+                allow_attributes:
+                    'href': ['a']
+                    'src': ['img']
+                    'alt': ['img']
+                    'class': ['*']
+                    'target': ['a']

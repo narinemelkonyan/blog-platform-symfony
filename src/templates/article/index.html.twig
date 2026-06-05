@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Articles - Page {{ pagination.page }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1>Latest Articles</h1>
+                    {% if app.user %}
+                        <a href="{{ path('app_article_new') }}" class="btn btn-primary">
+                             Create New
+                        </a>
+                    {% endif %}
+                </div>
+                {% if pagination.items is not empty %}
+                    {% for article in pagination.items %}
+                        <article class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="card-title h4">
+                                    <a href="{{ path('app_article_view', {'id': article.id}) }}"
+                                       class="text-decoration-none text-dark">
+                                        {{ article.title }}
+                                    </a>
+                                </h2>
+                                <p class="card-text text-muted">
+                                    {{ article.content|slice(0, 200)|striptags }}...
+                                </p>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <a href="{{ path('app_article_view', {'id': article.id}) }}"
+                                           class="btn btn-sm btn-outline-primary">
+                                            Read More
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    {% endfor %}
+                    {{ include('article/_pagination.html.twig') }}
+                {% else %}
+                    <div class="alert alert-info">
+                         No published articles found.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

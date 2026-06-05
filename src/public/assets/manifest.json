@@ -1,0 +1,18 @@
+{
+    "@symfony\/stimulus-bundle\/controllers.js": "\/assets\/@symfony\/stimulus-bundle\/controllers-graJ7DS.js",
+    "@symfony\/stimulus-bundle\/loader.js": "\/assets\/@symfony\/stimulus-bundle\/loader-IOzBDLu.js",
+    "@symfony\/ux-turbo\/turbo_controller.js": "\/assets\/@symfony\/ux-turbo\/turbo_controller-bFCo5ub.js",
+    "@symfony\/ux-turbo\/turbo_stream_controller.js": "\/assets\/@symfony\/ux-turbo\/turbo_stream_controller-WxKuxpf.js",
+    "app.js": "\/assets\/app-5-2-jDr.js",
+    "controllers\/autosave_controller.js": "\/assets\/controllers\/autosave_controller-gsnfjz-.js",
+    "controllers\/tinymce_controller.js": "\/assets\/controllers\/tinymce_controller-s7QkpFi.js",
+    "stimulus_bootstrap.js": "\/assets\/stimulus_bootstrap-xCO4u8H.js",
+    "styles\/app.css": "\/assets\/styles\/app-maoG0wF.css",
+    "styles\/article.css": "\/assets\/styles\/article-2EJ1Q7K.css",
+    "styles\/components.css": "\/assets\/styles\/components-Ly35sZp.css",
+    "styles\/layout.css": "\/assets\/styles\/layout-fRkHzGW.css",
+    "styles\/login.css": "\/assets\/styles\/login-VVYV_Lo.css",
+    "styles\/password-reset.css": "\/assets\/styles\/password-reset-pC3y3WX.css",
+    "styles\/register.css": "\/assets\/styles\/register-pbSktZc.css",
+    "styles\/variables.css": "\/assets\/styles\/variables-z0_Y_OT.css"
+}

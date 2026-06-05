@@ -1,0 +1,198 @@
+/* ========== Login Page Background ========== */
+.login-wrapper {
+    background: #f5f5f5;
+    min-height: 100vh;
+    padding: 2rem 0;
+    display: flex;
+    align-items: center;
+}
+
+/* ========== Login Card ========== */
+.login-card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--white);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-card .card-body {
+    padding: 2.5rem;
+}
+
+/* ========== Typography ========== */
+.login-wrapper h2 {
+    color: var(--text-primary);
+    font-weight: var(--font-bold);
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.75rem;
+}
+
+.login-subtitle {
+    color: var(--text-secondary);
+    font-size: var(--text-base);
+}
+
+/* ========== Form Labels ========== */
+.login-form .form-label {
+    font-size: var(--text-sm);
+    font-weight: var(--font-normal);
+    margin-bottom: var(--spacing-sm);
+    color: #6b7280;
+}
+
+/* ========== Form Controls ========== */
+.login-form .form-control {
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: var(--text-base);
+    transition: all var(--transition);
+    background-color: var(--white);
+    color: var(--text-primary);
+}
+
+.login-form .form-control::placeholder {
+    color: #9ca3af;
+}
+
+.login-form .form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    outline: none;
+}
+
+/* ========== Buttons ========== */
+.login-form .btn-primary {
+    padding: 0.75rem 2rem;
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    border-radius: 8px;
+    transition: all var(--transition);
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+}
+
+.login-form .btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.login-form .btn-primary:active {
+    transform: translateY(0);
+}
+
+/* ========== Remember Me Checkbox ========== */
+.login-form .form-check {
+    display: flex;
+    align-items: center;
+}
+
+.login-form .form-check-input {
+    width: 1.125rem;
+    height: 1.125rem;
+    cursor: pointer;
+    border: 1px solid #d1d5db;
+    background-color: var(--white);
+    margin-top: 0;
+}
+
+.login-form .form-check-input:checked {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.login-form .form-check-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.login-form .form-check-label {
+    margin-left: var(--spacing-sm);
+    cursor: pointer;
+    user-select: none;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+}
+
+/* ========== Links ========== */
+.reset-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+}
+
+.reset-link:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+.register-link {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+}
+
+.register-link a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: var(--font-medium);
+}
+
+.register-link a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* ========== Alerts ========== */
+.login-form .alert {
+    border-radius: 8px;
+    padding: 0.875rem 1rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid transparent;
+}
+
+.login-form .alert-danger {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border-color: #fecaca;
+}
+
+.login-form .alert-info {
+    background-color: #dbeafe;
+    color: #1e40af;
+    border-color: #bfdbfe;
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 768px) {
+    .login-wrapper {
+        padding: var(--spacing-md);
+    }
+
+    .login-card .card-body {
+        padding: var(--spacing-xl) var(--spacing-lg);
+    }
+
+    .login-wrapper h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .login-card .card-body {
+        padding: var(--spacing-lg) var(--spacing-md);
+    }
+
+    .login-form .btn-primary {
+        padding: 0.625rem 1.5rem;
+        font-size: var(--text-sm);
+    }
+
+    .login-form .form-control {
+        padding: 0.625rem 0.875rem;
+        font-size: var(--text-sm);
+    }
+}

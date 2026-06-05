@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Articles{% endblock %}</title>
+
+    {{ importmap('app') }}
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+{# Navbar #}
+<nav class="navbar">
+    <div class="container navbar-container">
+        <a class="navbar-brand" href="{{ path('app_article_index') }}">
+            <i class="bi bi-newspaper"></i> Blog Platform
+        </a>
+
+        {% if app.user %}
+            <div class="navbar-user">
+                <div class="user-avatar-wrapper">
+                    {% if app.user.avatar %}
+                        <img class="user-avatar" src="{{ asset('uploads/avatars/') ~ app.user.avatar }}">
+                    {% else %}
+                        <span class="user-initials">{{ app.user.firstName | first | upper ~ app.user.lastName | first | upper  }}</span>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <a href="{{ path('app_profile') }}" class="user-email">{{ app.user.email }}</a>
+                    <a href="{{ path('app_logout') }}" class="logout-link">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </a>
+                </div>
+
+            </div>
+        {% else %}
+            <a href="{{ path('app_login') }}" class="logout-link">
+                Login
+            </a>
+        {% endif %}
+    </div>
+</nav>
+
+{# Flash Messages #}
+<div class="container">
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                {% if label == 'success' %}
+                    <i class="bi bi-check-circle-fill"></i>
+                {% elseif label == 'danger' %}
+                    <i class="bi bi-exclamation-circle-fill"></i>
+                {% elseif label == 'warning' %}
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                {% else %}
+                    <i class="bi bi-info-circle-fill"></i>
+                {% endif %}
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    <i class="bi bi-x"></i>
+                </button>
+            </div>
+        {% endfor %}
+    {% endfor %}
+</div>
+
+{# Main Content #}
+{% block body %}{% endblock %}
+
+{% block javascripts %}{% endblock %}
+
+{# Footer #}
+<footer>
+    <div class="container text-center text-muted">
+        <p class="mb-0">© {{ 'now'|date('Y') }} Blog Platform</p>
+    </div>
+</footer>
+</body>
+</html>
+
+symfony-blog-platform

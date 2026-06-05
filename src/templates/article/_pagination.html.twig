@@ -1,0 +1,83 @@
+{% if pagination.pages > 1 %}
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {# Previous #}
+            <li class="page-item {{ not pagination.hasPrev ? 'disabled' : '' }}">
+                {% if pagination.hasPrev %}
+                    <a class="page-link"
+                       href="{{ path(app.request.attributes.get('_route'),
+                           app.request.query.all|merge({'page': pagination.page - 1})) }}">
+                         Previous
+                    </a>
+                {% else %}
+                    <span class="page-link">
+                        Previous
+                    </span>
+                {% endif %}
+            </li>
+            {# First page #}
+            {% if pagination.page > 3 %}
+                <li class="page-item">
+                    <a class="page-link"
+                       href="{{ path(app.request.attributes.get('_route'),
+                           app.request.query.all|merge({'page': 1})) }}">
+                        1
+                    </a>
+                </li>
+                {% if pagination.page > 4 %}
+                    <li class="page-item disabled">
+                        <span class="page-link">...</span>
+                    </li>
+                {% endif %}
+            {% endif %}
+            {# Page numbers #}
+            {% for page in range(max(1, pagination.page - 2), min(pagination.pages, pagination.page + 2)) %}
+                <li class="page-item {{ page == pagination.page ? 'active' : '' }}">
+                    {% if page == pagination.page %}
+                        <span class="page-link">{{ page }}</span>
+                    {% else %}
+                        <a class="page-link"
+                           href="{{ path(app.request.attributes.get('_route'),
+                               app.request.query.all|merge({'page': page})) }}">
+                            {{ page }}
+                        </a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            {# Last page #}
+            {% if pagination.page < pagination.pages - 2 %}
+                {% if pagination.page < pagination.pages - 3 %}
+                    <li class="page-item disabled">
+                        <span class="page-link">...</span>
+                    </li>
+                {% endif %}
+                <li class="page-item">
+                    <a class="page-link"
+                       href="{{ path(app.request.attributes.get('_route'),
+                           app.request.query.all|merge({'page': pagination.pages})) }}">
+                        {{ pagination.pages }}
+                    </a>
+                </li>
+            {% endif %}
+            {# Next #}
+            <li class="page-item {{ not pagination.hasNext ? 'disabled' : '' }}">
+                {% if pagination.hasNext %}
+                    <a class="page-link"
+                       href="{{ path(app.request.attributes.get('_route'),
+                           app.request.query.all|merge({'page': pagination.page + 1})) }}">
+                        Next
+                    </a>
+                {% else %}
+                    <span class="page-link">
+                        Next
+                    </span>
+                {% endif %}
+            </li>
+        </ul>
+        <p class="text-center text-muted small mt-2">
+            Showing {{ (pagination.page - 1) * pagination.limit + 1 }}
+            to {{ min(pagination.page * pagination.limit, pagination.total) }}
+            of {{ pagination.total }} articles
+        </p>
+    </nav>
+{% endif %}

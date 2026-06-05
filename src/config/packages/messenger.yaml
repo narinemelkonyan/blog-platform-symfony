@@ -1,0 +1,24 @@
+framework:
+    messenger:
+        failure_transport: failed
+
+        transports:
+            # https://symfony.com/doc/current/messenger.html#transport-configuration
+            async:
+                dsn: '%env(REDIS_DSN)%'
+
+                options:
+                    stream: messenger_async
+                    group: symfony
+                retry_strategy:
+                    max_retries: 3
+                    multiplier: 2
+                    delay: 1000
+
+            failed: 'doctrine://default?queue_name=failed'
+
+        routing:
+            Symfony\Component\Mailer\Messenger\SendEmailMessage: async
+            App\Message\EmailConfirmationMessage: async
+            App\Message\PasswordResetRequestMessage: async
+            App\Message\ArticleViewMessage: async

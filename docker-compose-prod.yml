@@ -1,0 +1,83 @@
+services:
+  php:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+      target: production
+    container_name: symfony-php-prod
+    env_file:
+      - .env
+    environment:
+      - APP_ENV=${APP_ENV_PROD:-prod}
+    volumes:
+      - public-data:/var/www/html/public
+    networks:
+      - symfony-network-prod
+    depends_on:
+      - mysql
+      - redis
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "${LOG_MAX_SIZE_PROD:-50m}"
+        max-file: "${LOG_MAX_FILES_PROD:-5}"
+
+  nginx:
+    image: nginx:alpine
+    container_name: symfony-nginx-prod
+    ports:
+      - "${NGINX_PORT_PROD:-80}:80"
+    volumes:
+      - public-data:/var/www/html/public:ro
+      - ./docker/nginx/default.prod.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - symfony-network-prod
+    depends_on:
+      - php
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "${LOG_MAX_SIZE_PROD:-50m}"
+        max-file: "${LOG_MAX_FILES_PROD:-5}"
+
+  mysql:
+    image: mysql:8
+    container_name: symfony-mysql-prod
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db-data-prod:/var/lib/mysql
+    networks:
+      - symfony-network-prod
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "${LOG_MAX_SIZE_PROD:-50m}"
+        max-file: "${LOG_MAX_FILES_PROD:-5}"
+  redis:
+    image: redis:7-alpine
+    container_name: symfony-redis-prod
+    networks:
+      - symfony-network-prod
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "${LOG_MAX_SIZE_PROD:-50m}"
+        max-file: "${LOG_MAX_FILES_PROD:-5}"
+
+networks:
+  symfony-network-prod:
+    driver: bridge
+
+volumes:
+  db-data-prod:
+  public-data:

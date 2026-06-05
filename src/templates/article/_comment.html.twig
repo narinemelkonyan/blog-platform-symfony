@@ -1,0 +1,45 @@
+<div class="row mt-4" id="comments">
+    <div class="col-lg-8">
+        <h4 class="mb-3">Comments ({{ comments|length }})</h4>
+        {% for message in app.flashes('danger') %}
+            <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+        {# Comment Form #}
+        {% if commentForm is not null %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    {{ form_start(commentForm) }}
+                    <div class="mb-3">
+                        {{ form_widget(commentForm.content, {'attr': {'class': 'form-control', 'placeholder': 'Write a comment...'}}) }}
+                        {{ form_errors(commentForm.content) }}
+                    </div>
+                    {# Honeypot — скрыто через CSS, не через display:none (боты его видят) #}
+                    <div style="position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden;">
+                        {{ form_widget(commentForm.phone) }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Post Comment</button>
+                    {{ form_end(commentForm) }}
+                </div>
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                <a href="{{ path('app_login') }}">Sign in</a> to leave a comment.
+            </div>
+        {% endif %}
+
+        {# Comments List #}
+        {% for comment in comments %}
+            <div class="card mb-3" id="comment-{{ comment.id }}">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <strong>{{ comment.author.email }}</strong>
+                        <small class="text-muted">{{ comment.createdAt|date('M d, Y H:i') }}</small>
+                    </div>
+                    <p class="mb-0">{{ comment.content }}</p>
+                </div>
+            </div>
+        {% else %}
+            <p class="text-muted">No comments yet. Be the first!</p>
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,62 @@
+# yaml-language-server: $schema=../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+# See also https://symfony.com/doc/current/service_container/import.html
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+    app.forbidden_words:
+        - 'spam'
+        - 'test'
+        - 'click here'
+        - 'buy now'
+        - 'free'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+    App\Builder\EmailConfirmationBuilder:
+        arguments:
+            $mailerFrom: '%env(MAILER_FROM)%'
+    App\Builder\PasswordResetRequestBuilder:
+        arguments:
+            $mailerFrom: '%env(MAILER_FROM)%'
+    App\Form\ArticleType:
+        arguments:
+            $tinyMceApiKey: '%env(TINYMCE_API_KEY)%'
+    App\Handler\ArticleHandler:
+        arguments:
+            $htmlSanitizer: '@html_sanitizer.sanitizer.app.article_sanitizer'
+            $uploadsDir: '%kernel.project_dir%/public/uploads/articles'
+    App\Handler\ProfileHandler:
+        arguments:
+            $uploadsDir: '%kernel.project_dir%/public/uploads/avatars'
+    App\Repository\ArticleRepository:
+        arguments:
+            $cachePopularArticles: '@cache.popular_articles'
+            $cacheHeavyQueries: '@cache.heavy_queries'
+    App\Validator\NoForbiddenWordsValidator:
+        arguments:
+            $forbiddenWords: '%app.forbidden_words%'
+    app.redis:
+        class: \Redis
+        factory: ['Symfony\Component\Cache\Adapter\RedisAdapter', 'createConnection']
+        arguments:
+            - '%env(REDIS_DSN)%'
+
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+        arguments:
+            - '@app.redis'
+            - { prefix: 'session_', ttl: 604800 }
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
